@@ -6,7 +6,6 @@ const storage = multer.diskStorage({
     cb(null, 'uploads')
   },
   filename(req, file, cb) {
-      
     cb(
       null,
       `${shortid.generate()}-${file.originalname}`

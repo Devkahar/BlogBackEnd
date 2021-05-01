@@ -11,12 +11,9 @@ connectDB();
 const userRoutes = require('./route/authRoute');
 
 
-
 app.use(express.json());
-
 const dir = path.resolve();
-app.use('/uploads', express.static(path.join(dir, '/uploads')))
-
+app.use('/uploads', express.static(path.join(dir, '/uploads')));
 app.use('/api',userRoutes);
 
 app.listen(port, ()=>{

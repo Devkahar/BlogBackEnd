@@ -1,12 +1,12 @@
 const User = require('../models/user');
 const generateToken = require('../utils/generateToken');
-
+const asyncHandler =  require('express-async-handler')
 
 // @desc    Register a new user
 // @route   POST /api/users
 // @access  Public
 
-exports.registerUser = async (req,res) =>{
+exports.registerUser = asyncHandler(async (req,res) =>{
     const {email,password,firstName,lastName,countryCode,mobileNumber} = req.body;
     const userExists = await User.findOne({email});
     if(userExists){
@@ -37,14 +37,14 @@ exports.registerUser = async (req,res) =>{
         throw new Error('Invalid Details');
     }
 
-}
+})
 
 
 // @desc    User LogIn
 // @route   POST /api/users/login
 // @access  Public
 
-exports.loginUser = async (req,res)=>{
+exports.loginUser =  asyncHandler(async (req,res)=>{
     const {email,password} = req.body;
 
     const user = await User.findOne({email});
@@ -63,4 +63,4 @@ exports.loginUser = async (req,res)=>{
         res.status(400)
         throw new Error('Invaild Login Details');
     }
-}
+});
