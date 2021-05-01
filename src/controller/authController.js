@@ -30,7 +30,7 @@ exports.registerUser = asyncHandler(async (req,res) =>{
             lastName: user.lastName,
             email: user.email,
             role: user.role,
-            token: generateToken(user._id),
+            token: generateToken(user._id,role= 'user'),
         })
     }else{
         res.status(400)
@@ -56,7 +56,7 @@ exports.loginUser =  asyncHandler(async (req,res)=>{
             lastName: user.lastName,
             email: user.email,
             role: user.role,
-            token: generateToken(user._id),
+            token: generateToken(user._id,user.role),
         })
     }
     else{
