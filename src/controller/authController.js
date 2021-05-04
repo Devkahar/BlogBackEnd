@@ -7,27 +7,22 @@ const asyncHandler =  require('express-async-handler')
 // @access  Public
 
 exports.registerUser = asyncHandler(async (req,res) =>{
-    const {email,password,firstName,lastName,countryCode,mobileNumber} = req.body;
+    const {email,password,name} = req.body;
     const userExists = await User.findOne({email});
     if(userExists){
         throw new Error('User already Exists');
     }
-    const image = req.file.filename;
+    // const image = req.file.filename;
     const user =  await User.create({
         email,
         password,
-        firstName,
-        lastName,
-        profilePic: image,
+        name,
+        // profilePic: image,
         role: 'user',
-        countryCode,
-        mobileNumber
     });
     if(user){
         res.status(201).json({
-            _id: user._id,
-            firstName: user.firstName,
-            lastName: user.lastName,
+            name: user.name,
             email: user.email,
             role: user.role,
             token: generateToken(user._id,role= 'user'),
@@ -51,12 +46,10 @@ exports.loginUser =  asyncHandler(async (req,res)=>{
 
     if(user && (await user.matchPassword(password))){
         res.status(200).json({
-            _id: user._id,
-            firstName: user.firstName,
-            lastName: user.lastName,
+            name: user.name,
             email: user.email,
             role: user.role,
-            token: generateToken(user._id,user.role),
+            token: generateToken(user._id,role= 'user'),
         })
     }
     else{
